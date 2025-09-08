@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+#include <cmath>
+
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int l = 1, r = *max_element(piles.begin(), piles.end());
+        int ans = r;
+
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            long long hours = 0;
+
+            for (int p : piles) {
+                hours += static_cast<long long>(ceil(static_cast<double>(p) / mid));
+            }
+
+            if (hours <= h) {
+                ans = mid;
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
